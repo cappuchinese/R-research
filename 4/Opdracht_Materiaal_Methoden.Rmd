@@ -1,0 +1,201 @@
+---
+title: "Opdracht_Materiaal_Methoden.Rmd"
+author: "Lisa Hu"
+date: "19-5-2021"
+output:
+  pdf_document: 
+    toc: true
+    toc_depth: 2
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Materiaal en Methoden
+In dit onderzoek wordt er gekeken naar de tijd waarin men een basale test aflegt en of muziek daar invloed op heeft. Om de testen af te leggen, werden de kandidaten uitgenodigd op verschillende tijden en data. Voor degenen die geen geschikte tijd konden vinden, werd gevraagd om persoonlijk een afspraak te maken. De uitnodiging is te vinden in Appendix A.  
+Op de aangegeven data kwamen de kandidaten bij een om getest te worden. De testen bestaan uit rekenkundige vragen waar drie formulieren van zijn gemaakt in Google Forms. Deze zijn terug te vinden in Appendix B.  
+De rekenkundige vragen zijn gemaakt met gebruik van Python 3 en de libraries `math` en `random`. Dit script is terug te vinden in Appendix C.  
+De formulieren bevatten de volgende punten:
+
+* De ID van de kandidaat en of er muziek aanwezig is.
+* De rekenkundige formulieren:
+  + 3 keer optellen (getallen zijn 3 tot 5 lang)
+  + 3 keer aftrekken (getallen zijn 3 tot 5 lang)
+  + 2 keer vermenigvuldigen (getallen zijn 2 of 3 lang)
+  + 2 keer delen (getallen zijn 2 tot 4 lang, geen restgetallen)
+  + 1 keer machtsverheffen met 2 (alleen de kwadraten van 10 tot 20 worden gevraagd)
+  + 1 keer worteltrekken (antwoord moet tussen de 1 en 10 vallen)
+
+Tijdens het uitvoeren werd iedereen gevraagd om in het aangegeven spraakkanaal te zitten. Daar kon iedereen het gegeven formulier alvast openen en enige instellingen voor muziek en dergelijke aanpassen. Nadat iedereen het eerste deel van het formulier had ingevuld, kon het aftellen beginnen. Vanaf dan mochten de kandidaten het formulier vervolgen en de vragen maken. Als men klaar was, werd er verzocht om in een andere spraakkanaal te zitten om orde te behouden. Zo werd dit herhaald voor de andere twee testen.  
+De eerste toets die iedereen maakte is een voorbeeld voor hoe het eruit zal zien. Dit was om het leereffect eraf te halen. Daarna werd de groep in tweeën verdeeld; een groep waarbij er eerst muziek werd gebruikt en een groep zonder. Voor de laatste test werd het muziek omgedraaid.  
+De resultaten van de testen werden in Google Spreadsheets geëxporteerd, waarna het als CSV-bestand werd gedownload.
+
+Het verkregen CSV-bestand werd hierna geïmporteerd in Rstudio. De geïmporteerde dataset werd daarna geïnspecteerd en gecontroleerd of de verkregen tijd-data, met muziek & zonder muziek, nominaal was verdeeld. Dit werd gedaan met behulp van een boxplot en een Q-Q plot. Dit werd uitgevoerd om te bepalen welke statistische toets toegepast moest worden, een ongepaarde t-toets of een Mann-Whitney U toets.
+
+# Appendix
+## Appendix A
+De uitnodiging: \href{url}{https://forms.gle/1Ww8mdTRotaDgVu77}
+
+## Appendix B
+De rekenkundige vragen:
+Formulier 1: \href{url}{https://forms.gle/GNyys1y2SWenigfj9}  
+Formulier 2: \href{url}{https://forms.gle/f4DrjP3zXkxLGhuB9}  
+Formulier 3: \href{url}{https://forms.gle/oFGVoAY2YQ1VFGEk8}
+
+## Appendix C
+Python code voor het maken van vragen:
+```
+# imports
+from random import randint as rdi
+import math
+
+# globals
+formula_list = []
+
+
+# Plus/minus questions
+def plus_minus_questions():
+    for i in range(6):
+        number1 = rdi(10, 99999)
+        number2 = rdi(10, 99999)
+        if i < 3:
+            answer = number1 + number2
+            calculation = "{} + {} = {}".format(number1, number2, answer)
+        else:
+            answer = number1 - number2
+            calculation = "{} - {} = {}".format(number1, number2, answer)
+        formula_list.append(calculation)
+
+
+# Multiplying/division questions
+def multiplication_questions():
+    for i in range(2):
+        number1 = rdi(10,999)
+        number2 = rdi(10,999)
+        answer = number1 * number2
+        calculation = "{} * {} = {}".format(number1, number2, answer)
+        formula_list.append(calculation)
+
+
+def division_questions():
+    for i in range(2):
+        number1 = rdi(1,100)
+        number2 = rdi(1,100)
+        answer = number1 * number2
+        calculation = "{} / {} = {}".format(answer, number2, number1)
+        formula_list.append(calculation)
+
+def squared_question():
+    for i in range(3):
+      num = rdi(5, 20)
+      answer = num ** 2
+      calculation = f"{num} ^2 = {answer}"
+      formula_list.append(calculation)
+
+
+def sqrt_questions():
+    for i in range(3):
+      num = rdi(1, 10)
+      squared = num ** 2
+      answer = math.sqrt(squared)
+      calculation = f"[root]{squared} = {answer}"
+      formula_list.append(calculation)
+
+
+def write_txt(filename, formula_list):
+    fileopen = open(filename, "w")
+    for item in formula_list:
+        fileopen.write("{}\n".format(item))
+    fileopen.close()
+
+def main():
+    filename = input("Please put in a filename, no .txt required: ") + ".txt"
+    plus_minus_questions()
+    multiplication_questions()
+    division_questions()
+    squared_question()
+    sqrt_questions()
+    write_txt(filename, formula_list)
+
+
+if __name__ == "__main__":
+    exit(main())
+```
+## Appendix D
+Het protocol:
+
+### Doel
+Ons onderzoek kijkt naar de snelheid waarop men een cognitieve toets aflegd en of dit wordt beïnvloed wanneer men naar muziek luistert. Voor de muziek hebben wij specifiek jazz muziek gekozen, omdat het rustgevend is maar niet slaapverwekkend.  
+Wij verwachten dat de tijd van het afleggen langer zal zijn wanneer er muziek op de achtergrond aanwezig is. Het onderzoek is uitgesloten tot studenten tussen de 18 en 28 jaar. 
+
+### Materialen
+Om de toetsen af te leggen, wordt er gebruik gemaakt van een Google Forms. In dit formulier maakt de kandidaat een korte toets van 25 vragen. Verder vragen wij aan de kandidaat of hij/zij met ons in de aangegeven Discord call wil zitten. Hiervoor wordt een aparte Discord server van tevoren aangemaakt. Voor de mensen die geen account voor Discord bezitten kunnen zich makkelijk aansluiten. De webapplicatie is voldoende en Discord maakt zelf een tijdelijk account aan. Installatie is dus niet nodig. Voor het opzetten van een Discord server, volg de volgende stappen die te vinden zijn op de [officiële support site](https://support.discord.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
+
+Voordat de kandidaat de toets maken, vullen zij eerst hun ID in en of ze de toets met of zonder muziek afleggen. De ID zijn hexnummers van hun Discord tag die bij hun account staat. Voor overlappende ID's worden er een laag streepje met 01, 02, 03, et cetera toegevoegd. Een voorbeeld van zo'n ID kan zijn `7389` of `7389_01`, `7389_02`, et cetera als er meerdere van dezelfde zijn.
+
+De gemaakte toetsen bestaan uit 25 vragen, opgebouwd als volgt:
+
+* 12 rekenvragen
+  + 3 keer optellen (getallen zijn 3 tot 5 lang)
+  + 3 keer aftrekken (getallen zijn 3 tot 5 lang)
+  + 2 keer vermenigvuldigen (getallen zijn 2 of 3 lang)
+  + 2 keer delen (getallen zijn 2 tot 4 lang)
+  + 1 keer machtsverheffen met 2 (alleen de kwadraten van 10 tot 20 worden gevraagd)
+  + 1 keer worteltrekken (antwoord moet tussen de 1 en 10 vallen)
+* 10 taalvragen
+  + 5 zinnen waarbij een ontbrekend woord moet worden ingevuld
+  + 5 spellingsvragen waarbij er een geluidsfragment wordt afgespeeld
+* 3 vragen over ruimtelijk inzicht
+  + De kandidaat krijgt een plattegrond van een kubus en moet uit de opties kiezen welke de juiste kubus weergeeft voor die plattegrond.
+
+De toetsen worden in het Engels afgenomen gezien en internationale studenten erbij zijn betrokken.
+
+### Methoden
+Alle kandidaten worden opgeroepen om ons in de Discord server bij te wonen. Hier wordt iedereen opgevangen in de "wachtkamer". Één voor één wordt iemand opgeroepen om naar een andere voice channel te komen om de toets af te leggen. Mensen die in de wachtkamer zitten kunnen hun eigen ding blijven doen. Natuurlijk kan niet iedereen op hetzelfde moment beschikbaar zijn. Daarvoor zijn er meerdere momenten om deel te nemen aan het onderzoek.  
+Om het leereffect te verminderen maakt iedereen dezelfde toets om in te zien wat voor vragen er verwacht kunnen worden. De ene helft van de onderzoeksgroep zal de eerste toets zonder muziek maken. De andere helft maakt de toets eerst met muziek. Hierna wordt de kandidaat weer verzocht om in de "wachtkamer" te zitten. Na 5 minuten zal hij/zij weer worden opgeroepen om de tweede toets af te leggen. Als er bij de eerste toets muziek werd afgespeeld, zal deze zonder muziek plaats vinden.
+
+Er wordt verwacht dat het per kandidaat ongeveer 25 minuten duurt; 5 minuten per toets waar er 3 van zijn, met een 5 minuten rust tussenin om de kandidaat uit het denkritme te krijgen.
+
+Voor de resultaten worden alleen de testen met een score hoger dan 60% meegenomen in de uitwerking. Alle testen die onder de 60% worden behaald, worden niet meegenomen in de resultaten omdat het onvoldoende is en anders de marge te groot wordt.
+
+Om de eerste deelvraag "*Heeft muziek invloed op de resultaat van de test?*" te beantwoorden, zullen er categorieën worden gemaakt over de percentages: hoger dan 90% goed, 80%-89% goed, 70%-79% goed en 60%-69% goed. Deze categorieën worden voor beide metingen ingevuld om te zien of er een verschil is in de hoeveelheden.
+
+Voor de tweede deelvraag "*Is er een verband tussen tijd en resultaat?*" wordt er per test gekeken of er beter of slechter wordt gescored met de gebruikte tijd. 
+
+Voor de onderzoeksvraag wordt de tijd per test gemeten en gekeken naar het verschil in tijd tussen met of zonder muziek. 
+
+Niet iedereen zal de gekozen muziek even erg waarderen. Dit kan invloed hebben op de resultaten, maar omdat dit te erg varieert zal het in de discussie worden meegenomen en buiten beschouwing worden gelaten tijdens het formuleren van de resultaten.
+
+### Data interpretatie
+De deelvraag "*Heeft muziek invloed op de resultaat van de test?*" is makkelijk te visualiseren door cirkeldiagrammen van beide metingen te maken en te vullen met de hiervoor genoemde groepering.  
+Voor de deelvraag "*Is er een verband tussen tijd en resultaat?*" wordt er gebruik gemaakt van spreidingsdiagrammen, waarbij de x-as staat voor de afgelegde tijd en de y-as voor de behaalde percentage.  
+Bij de onderzoeksvraag worden er staafdiagrammen gevisualiseerd met de frequentie waarin een bepaalde tijd wordt afgelegd.
+
+### Referentie
+Discord Inc. 2020, gebruikt op 26 april 2021, <<https://support.discord.com/hc/en-us/articles/204849977-How-do-I-create-a-server->>
+
+<!-- ## Materiaal -->
+<!-- Voor dit onderzoek kregen de kandidaten een formulier met rekenkundige of taalkundige vragen van B1 niveau. Alle formulieren zijn gemaakt in het Engels, wegens internationale kandidaten. De formulieren bevatten de volgende punten: -->
+
+<!-- * De ID van de kandidaat en of er muziek aanwezig is. -->
+<!-- * De eisen voor participatie. -->
+<!-- * De rekenkundige formulieren: -->
+<!--   + 3 keer optellen (getallen zijn 3 tot 5 lang) -->
+<!--   + 3 keer aftrekken (getallen zijn 3 tot 5 lang) -->
+<!--   + 2 keer vermenigvuldigen (getallen zijn 2 of 3 lang) -->
+<!--   + 2 keer delen (getallen zijn 2 tot 4 lang, geen restgetallen) -->
+<!--   + 1 keer machtsverheffen met 2 (alleen de kwadraten van 10 tot 20 worden gevraagd) -->
+<!--   + 1 keer worteltrekken (antwoord moet tussen de 1 en 10 vallen) -->
+<!-- * De taalkundige formulieren: -->
+<!--   + 5 situaties waarbij het juiste antwoord op moet worden gegeven. -->
+<!--   + 5 zinnen waarbij een ontbrekend woord moet worden ingevuld. -->
+
+<!-- Van beide vormen zijn er drie verschillende versies gemaakt. Hiervoor is gebruik gemaakt van Google Forms. Om de formulieren te bekijken, zie Appendix A.   -->
+<!-- De rekenkundige vragen zijn gemaakt met gebruik van Python 3 en de libraries `math` en `random.randint`. Dit script is terug te vinden in Appendix B.   -->
+<!-- De vragen die in de taaltoetsen zijn gebruikt, komen van de officiële Cambridge English site.\footnote{https://www.cambridgeenglish.org/test-your-english/} -->
+
+
+

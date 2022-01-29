@@ -1,0 +1,102 @@
+---
+title: "Opdracht_2.Rmd"
+author: "Dennis Haandrikman, Mats Slik, Lisa Hu"
+date: "21-4-2021"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Onderzoeksvraag
+Onze onderzoeksvraag duidt als volgt:
+
+> "Heeft het luisteren naar jazzmuziek invloed op de tijd waarin men een test aflegd?"
+
+## Deelvragen
+Naast de tijd waarop de kandidaten de testen afleggen, wordt er ook gekeken naar het verschil in resultaat. Dit leidt tot de volgende deelvraag:
+
+> "Heeft muziek invloed op de resultaat van de test?"
+
+Verder kan de afgelegde tijd ook invloed hebben op de resultaten:
+
+> "Is er een verband tussen tijd en resultaat?"
+
+# Het protocol
+
+## Doel
+Ons onderzoek kijkt naar de snelheid waarop men een cognitieve toets aflegd en of dit wordt beïnvloed wanneer men naar muziek luistert. Voor de muziek hebben wij specifiek jazz muziek gekozen, omdat het rustgevend is maar niet slaapverwekkend.  
+Wij verwachten dat de tijd van het afleggen langer zal zijn wanneer er muziek op de achtergrond aanwezig is. Het onderzoek is uitgesloten tot studenten tussen de 18 en 28 jaar. 
+
+## Materialen
+Om de toetsen af te leggen, wordt er gebruik gemaakt van een Google Forms. In dit formulier maakt de kandidaat een korte toets van 25 vragen. Verder vragen wij aan de kandidaat of hij/zij met ons in de aangegeven Discord call wil zitten. Hiervoor wordt een aparte Discord server van tevoren aangemaakt. Voor de mensen die geen account voor Discord bezitten kunnen zich makkelijk aansluiten. De webapplicatie is voldoende en Discord maakt zelf een tijdelijk account aan. Installatie is dus niet nodig. Voor het opzetten van een Discord server, volg de volgende stappen die te vinden zijn op de [officiële support site](https://support.discord.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
+
+Voordat de kandidaat de toets maken, vullen zij eerst hun ID in en of ze de toets met of zonder muziek afleggen. De ID zijn hexnummers van hun Discord tag die bij hun account staat. Voor overlappende ID's worden er een laag streepje met 01, 02, 03, et cetera toegevoegd. Een voorbeeld van zo'n ID kan zijn `7389` of `7389_01`, `7389_02`, et cetera als er meerdere van dezelfde zijn.
+
+De gemaakte toetsen bestaan uit 25 vragen, opgebouwd als volgt:
+
+* 12 rekenvragen
+  + 3 keer optellen (getallen zijn 3 tot 5 lang)
+  + 3 keer aftrekken (getallen zijn 3 tot 5 lang)
+  + 2 keer vermenigvuldigen (getallen zijn 2 of 3 lang)
+  + 2 keer delen (getallen zijn 2 tot 4 lang)
+  + 1 keer machtsverheffen met 2 (alleen de kwadraten van 10 tot 20 worden gevraagd)
+  + 1 keer worteltrekken (antwoord moet tussen de 1 en 10 vallen)
+* 10 taalvragen
+  + 5 zinnen waarbij een ontbrekend woord moet worden ingevuld
+  + 5 spellingsvragen waarbij er een geluidsfragment wordt afgespeeld
+* 3 vragen over ruimtelijk inzicht
+  + De kandidaat krijgt een plattegrond van een kubus en moet uit de opties kiezen welke de juiste kubus weergeeft voor die plattegrond.
+
+De toetsen worden in het Engels afgenomen gezien en internationale studenten erbij zijn betrokken.
+
+## Methoden
+Alle kandidaten worden opgeroepen om ons in de Discord server bij te wonen. Hier wordt iedereen opgevangen in de "wachtkamer". Één voor één wordt iemand opgeroepen om naar een andere voice channel te komen om de toets af te leggen. Mensen die in de wachtkamer zitten kunnen hun eigen ding blijven doen. Natuurlijk kan niet iedereen op hetzelfde moment beschikbaar zijn. Daarvoor zijn er meerdere momenten om deel te nemen aan het onderzoek.  
+Om het leereffect te verminderen maakt iedereen dezelfde toets om in te zien wat voor vragen er verwacht kunnen worden. De ene helft van de onderzoeksgroep zal de eerste toets zonder muziek maken. De andere helft maakt de toets eerst met muziek. Hierna wordt de kandidaat weer verzocht om in de "wachtkamer" te zitten. Na 5 minuten zal hij/zij weer worden opgeroepen om de tweede toets af te leggen. Als er bij de eerste toets muziek werd afgespeeld, zal deze zonder muziek plaats vinden.
+
+Er wordt verwacht dat het per kandidaat ongeveer 25 minuten duurt; 5 minuten per toets waar er 3 van zijn, met een 5 minuten rust tussenin om de kandidaat uit het denkritme te krijgen.
+
+Voor de resultaten worden alleen de testen met een score hoger dan 60% meegenomen in de uitwerking. Alle testen die onder de 60% worden behaald, worden niet meegenomen in de resultaten omdat het onvoldoende is en anders de marge te groot wordt.
+
+Om de eerste deelvraag "*Heeft muziek invloed op de resultaat van de test?*" te beantwoorden, zullen er categorieën worden gemaakt over de percentages: hoger dan 90% goed, 80%-89% goed, 70%-79% goed en 60%-69% goed. Deze categorieën worden voor beide metingen ingevuld om te zien of er een verschil is in de hoeveelheden.
+
+Voor de tweede deelvraag "*Is er een verband tussen tijd en resultaat?*" wordt er per test gekeken of er beter of slechter wordt gescored met de gebruikte tijd. 
+
+Voor de onderzoeksvraag wordt de tijd per test gemeten en gekeken naar het verschil in tijd tussen met of zonder muziek. 
+
+Niet iedereen zal de gekozen muziek even erg waarderen. Dit kan invloed hebben op de resultaten, maar omdat dit te erg varieert zal het in de discussie worden meegenomen en buiten beschouwing worden gelaten tijdens het formuleren van de resultaten.
+
+## Data interpretatie
+De deelvraag "*Heeft muziek invloed op de resultaat van de test?*" is makkelijk te visualiseren door cirkeldiagrammen van beide metingen te maken en te vullen met de hiervoor genoemde groepering.  
+Voor de deelvraag "*Is er een verband tussen tijd en resultaat?*" wordt er gebruik gemaakt van spreidingsdiagrammen, waarbij de x-as staat voor de afgelegde tijd en de y-as voor de behaalde percentage.  
+Bij de onderzoeksvraag worden er staafdiagrammen gevisualiseerd met de frequentie waarin een bepaalde tijd wordt afgelegd.
+
+## Referentie
+Discord Inc. 2020, gebruikt op 26 april 2021, <<https://support.discord.com/hc/en-us/articles/204849977-How-do-I-create-a-server->>
+
+## Appendix
+| Feedback op het doel 
+|       Het doel is duidelijk. De onderzoeksvraag komt goed naar voren en de hypothese is ook duidelijk.
+| Alleen missen we de alternatieve h1 hypothese.
+
+| Feedback op de materialen
+|       Word allemaal goed benoemd wat er nodig is. Alleen moet de referentie naar de support site nog opgenomen worden in de referenties.
+
+| Feedback op de methoden
+|       Het experiment word goed beschreven zodat iemand anders hetzelfde zou kunnen toetsen. Ook word er per deelvraag goed beschreven wat ze er mee willen toetsen.
+|       Alleen is de drempel om mee te doen misschien wat groot als de kandidaten zelf een Discord account moeten aanmaken. Dus misschien een idee om een algemeen account aan te maken waar alle kandidaten na elkaar mee kunnen inloggen. 
+|       Als alle kandidaten te gelijk in de "wachtkamer" zitten kan het voor de laatste kandidaat die de toets moet maken heel lang duren voordat die aan de beurt is. Hierdoor moeten sommige kandidaten wel erg lang beschikbaar zijn, als elk persoon een kwartier doet over een toets. 
+|       Let erop dat als er twee verschillende toetsen worden gebruikt, een van de twee sowieso minder tijd kost dan de andere. En het niet met de muziek te maken heeft maar met de toets die gemaakt word.
+|       Een korte uitleg waarom alleen resultaten met een score hoger dan 60% worden meegenomen zou handig kunnen zijn.
+
+| Feedback op de data interpretatie
+|       Er word per vraag goed beschreven wat er voor nodig is om het goed te visualiseren.

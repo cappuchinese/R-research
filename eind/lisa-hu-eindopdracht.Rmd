@@ -1,0 +1,185 @@
+---
+title: "Het effect van jazzmuziek op snelheid van taken."
+author: "Dennis Haandrikman, Mats Slik, Lisa Hu"
+output:
+  pdf_document:
+    includes:
+      before_body: title.sty
+    toc: true
+    toc_depth: 1
+    latex_engine: xelatex
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#Required Libraries
+
+```
+
+\newpage
+# Materiaal en methodes
+In dit onderzoek wordt er gekeken naar de tijd waarin men een basale test aflegt en of jazzmuziek daar invloed op heeft, hiernaast wordt er ook gekeken of muziek invloed heeft op het resultaat en of er een verband is tussen tijd en resultaat. Om de testen af te leggen, werden de kandidaten uitgenodigd op verschillende tijden en data. Voor degenen die geen geschikte tijd konden vinden, werd gevraagd om persoonlijk een afspraak te maken. Daarnaast was er een korte checklijst voor de eisen voor participatie. De kandidaat moet:
+
+1.	tussen de 18 en 30 jaar oud zijn;
+2.	een Bachelor student of hoger zijn (minstens niveau 4 volgens het EQF\footnote{https://europa.eu/europass/en/european-qualifications-framework-eqf});
+3.	in staat zijn om muziek te horen;
+4.	een stabiele internet connectie hebben.
+
+De uitnodiging is te vinden in Appendix A.
+
+Op de aangegeven data kwamen de kandidaten bij een om getest te worden. De testen bestaan uit rekenkundige vragen waar drie formulieren van zijn gemaakt in Google Forms. Deze zijn terug te vinden in Appendix B. 
+Alle kandidaten worden daarna uitgenodigd om onze Discord server te betreden, hiervoor is een eigen Discord server opgezet volgens de stappen op Discord hun support page\footnote{https://support.discord.com/hc/en-us/articles/204849977-How-do-I-create-a-server-}. Voor de mensen die geen account voor Discord bezitten, kunnen zich makkelijk aansluiten. Er is namelijk een webapplicatie beschikbaar voor Discord die voldoende is en Discord maakt zelf een tijdelijk account aan. Installatie is dus niet nodig.
+De rekenkundige vragen zijn gemaakt met gebruik van Python 3 en de libraries `math` en `random`. Dit script is terug te vinden in het toegevoegde Python script genoemd: `form_math_generator.py`.
+
+De formulieren bevatten de volgende punten: de ID van de kandidaat en of er muziek aanwezig is.
+De rekenkundige vragen omvatten:
+
++ 3 keer optellen (getallen zijn 3 tot 5 lang)
++ 3 keer aftrekken (getallen zijn 3 tot 5 lang)
++ 2 keer vermenigvuldigen (getallen zijn 2 of 3 lang)
++ 2 keer delen (getallen zijn 2 tot 4 lang, geen restgetallen)
++ 1 keer machtsverheffen met 2 (alleen de kwadraten van 10 tot 20 worden gevraagd)
++ 1 keer worteltrekken (antwoord moet tussen de 1 en 10 vallen)
+
+\newpage
+Tijdens het uitvoeren werd iedereen gevraagd om in het door ons aangegeven spraakkanaal te zitten. Om de formulieren enigszins [particulier te houden/te bedekken], werd het kanaal met de formulieren privé gemaakt voor iedereen die geen rol had ontvangen. Pas wanneer de kandidaten zich in de aangewezen spraakkanaal bevonden, kregen zij de “Participant” rol. Daarmee werden de formulieren zichtbaar en konden zij het gegeven formulier alvast openen. De eerste toets die iedereen maakte is een voorbeeld voor hoe het eruit zal zien. Dit was om het leereffect eraf te halen. Dit werd met de hele groep gedaan in het spraakkanaal waar iedereen werd opgevangen. Vervolgens werden de kandidaten gelijkmatig verdeeld: de ene groep maakt het eerst mét muziek en de andere zonder. De groepen werden naar de respectievelijke spraakkannalen verplaatst. In de spraakkanaal waar muziek wordt afgespeeld, bevond zich Rythm, een Discord Bot gecreëerd om muziek in een spraakkanaal af te laten spelen volgens een YouTube link. Er is gekozen voor rechtenvrije jazzmuziek.  De kandidaten kregen eerst wat tijd om enige instellingen voor de muziek en dergelijke aan te passen. Hierna werden de kandidaten verteld welk formulier zij mochten openen. Nadat iedereen het eerste deel van het formulier had ingevuld, kon het aftellen beginnen. Vanaf dan mochten de kandidaten het formulier vervolgen en de vragen maken. Als men klaar was, werd er verzocht om zich naar de originele spraakkanaal te verplaatsen om orde te behouden. Zo werd dit herhaald voor de tweede test, maar werd de groep die eerst muziek kreeg verwezen naar het spraakkanaal zonder muziek en vice versa.  
+De resultaten van de testen werden in Google Spreadsheets geëxporteerd, waarna het als CSV-bestand werd gedownload.
+
+Het verkregen CSV-bestand werd hierna geïmporteerd in Rstudio. De geïmporteerde dataset werd daarna geïnspecteerd en gecontroleerd of de verkregen tijd-data, met muziek & zonder muziek, nominaal was verdeeld. Dit werd gedaan met behulp van een boxplot en een Q-Q plot. Dit werd uitgevoerd om te bepalen welke statistische toets toegepast moest worden, een ongepaarde t-toets of een Mann-Whitney U toets.
+
+\newpage
+# Resultaten
+
+```{r data, include=TRUE}
+#Import the file
+formdata <- read.csv("onderzoek_Responses.csv", sep=";")
+```
+
+```{r file_handling}
+#ease of use to run graphs.
+seperatetimes <- formdata
+seperatetimes <- seperatetimes[-1]
+seperatetimes <- seperatetimes[-2]
+seperatetimes <- seperatetimes[-3]
+```
+
+```{r data_ground_work, include=TRUE}
+formdata$time.difference <- formdata$total.time.without.music-formdata$total.time.with.music
+
+#Inserts a true/false based on if the time was affected positively/negatively.
+#A True affected time positively -> test with music was faster
+#A False affected time negatively -> test with music was slower
+formdata$time.effect <- formdata$time.difference >= 0
+
+#Gets the absolute value of the integer -> negatives become positive (easier to work with)
+formdata$time.difference <- abs(formdata$time.difference)
+formdata$time.difference
+
+```
+
+```{r nominal_distribution, include=TRUE}
+#Calculate stdev, mean and distribution of the times without music
+sd_time_no_music <- sd(formdata$total.time.without.music)
+mean_time_no_music <- mean(formdata$total.time.without.music)
+distribution_no_music <- dnorm(formdata$total.time.without.music, 
+                               mean=mean_time_no_music, sd=sd_time_no_music)
+
+#Calculate stdev, mean & distribution of the times with music.
+sd_time_music <- sd(formdata$total.time.with.music)
+mean_time_music <- mean(formdata$total.time.with.music)
+distribution_music <- dnorm(formdata$total.time.with.music, 
+                            mean=mean_time_music, sd=sd_time_music)
+
+#Plot the 2 graphs for the nominal distribution
+plot(x=formdata$total.time.without.music, y=distribution_no_music,
+     main ="Normaal verdeling, zonder muziek",
+     xlab = "Totale tijd zonder muziek",
+     ylab = "Verdeling",
+     col = "blue")
+
+plot(x=formdata$total.time.with.music, y=distribution_music,
+     main = "Normale verdeling, met muziek",
+     xlab = "Totale met muziek",
+     ylab = "Verdeling",
+     col = "red")
+```
+
+```{r qq_line}
+# The QQ plot is a second method of seeing if the data is normaly divided.
+# The dots should follow along the plotted line.
+qqnorm(seperatetimes[,1], pch = 1,
+       main= "Normaal Q-Q plot van totaal tijd zonder muziek",
+       ylab= "Kwantielen in data",
+       xlab="Theoretische kwantielen")
+
+qqline(seperatetimes[,1])
+
+
+qqnorm(seperatetimes[,2], pch = 1, 
+       main= "Normaal Q-Q plot van totaal tijd met muziek",
+       ylab= "Kwantielen in data",
+       xlab="Theoretische kwantielen")
+
+qqline(seperatetimes[,2])
+
+```
+
+
+```{r boxplot}
+# This boxplots is a graphical overview of how the data compares to eachother.
+boxplot(seperatetimes , col = c("blue", "orange"),
+          ylab = "time", xlab = "Group")
+```
+
+```{r f_test}
+# The F test, tests if the groups are homogenous or not.
+# If the p-value is below 0.05, the groups aren't homogenous and cannot be compared.
+res.ftest <- var.test(x=seperatetimes[,1], y=seperatetimes[,2])
+res.ftest 
+```
+
+```{r unpaired_two_sample_t_test}
+# The p-value in the t-test denotes if the data is significantly different or not.
+# A p-value above 0.05 means the data isn't significantly different.
+result_t.test <- t.test(x=seperatetimes[,1], y=seperatetimes[,2], var.equal = TRUE)
+result_t.test
+```
+
+```{r f.test_score}
+score_f.test <- var.test(x=formdata[,3], y=formdata[,5])
+score_f.test
+```
+
+```{r unpaired_two_sample_t_test_resultscores}
+score_t.test <- t.test(x=formdata[,3], y=formdata[,5], var.equal = TRUE)
+score_t.test
+```
+
+\newpage
+# Conclusie
+Aan de eerste twee grafieken is de normaal verdeling afgebeeld en is te zien dat het mooi verdeeld is. In de Q-Q plot met muziek zijn de resultaten dichterbij de lijn dan in de plot zonder muziek, dus de verdeling voor "met muziek" is beter.
+
+De deelvragen "Heeft muziek invloed op de resultaat van de test?" en "Is er een verband tussen tijd en resultaat?" kunnen niet beantwoord worden door een tekort aan resultaten.  
+Verder, "Heeft het luisteren naar jazzmuziek invloed op de tijd waarin men een test aflegd?". Er is geen duidelijk verschil tussen de resultaten voor zonder muziek en met muziek.
+
+\newpage
+# Discussie
+## Persoonlijke muzieksmaak
+Wat een mogelijke variabel kan zijn tijdens dit onderzoek is of de deelnemers de muziek aangenaam of storend vinden. Dit kan namelijk beiden een verschillend effect creëren. Aangename muziek kunnen de deelnemers kalmeren waardoor deze rustiger en op een slomer tempo hun test afnemen. Storende muziek kunnen de deelnemers irriteren, wat voor een gehaast tempo kan zorgen.
+
+## Lage opkomst
+Het experiment was hiernaast ook slecht ontvangen in de kring waar wij hebben rondgevraagd. Er was namelijk een lage opkomst aan geïnteresseerde mensen die wouden meedoen aan het experiment. Hiervoor kunnen meerdere redenen voor bedacht worden.
+De eerste reden is een reactie dat de uitnodiging leek op een spam-link en dat mensen de invitatie niet betrouwbaar vonden. De tweede reden kan zijn dat mensen niet geïnteresseerd waren in het uitvoeren van rekenkundige vragen; er waren namelijk een aantal deelnemers die hun irritatie uitspraken over de vragen die ze hadden gemaakt en dat zei genoeg rekenwerk hebben uitgevoerd voor het komende jaar.
+
+## Onjuiste verdeling
+De groepen zijn niet helemaal eerlijk verdeeld, aangezien er meer kandidaten begonnen met een test zonder muziek. Dit komt door slechte communicatie waardoor er een groep is misgelopen. 
+
+
+# Appendixes
+## Appendix A
+De uitnodiging: https://forms.gle/HYJPpxf8ZuF7FEED7
+
+## Appendix B
+Math 1: https://forms.gle/YbHxiVCUZfQQnA8w8 
+Math 2: https://forms.gle/EDZHFEij9t3goNU88 
+Math 3: https://forms.gle/oNC6fw7iof5rd32r7 

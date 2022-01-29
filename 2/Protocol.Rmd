@@ -1,0 +1,43 @@
+---
+title: "Protocol"
+author: "Lisa Hu, Dennis Haandrikman, Mats Slik"
+date: "26-4-2021"
+output:
+  word_document:
+    toc: yes
+  html_document:
+    df_print: paged
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Doel
+Ons onderzoek kijkt naar de snelheid waarop men een cognitieve toets aflegd en of dit wordt beïnvloed wanneer men naar muziek luistert. Voor de muziek hebben wij specifiek jazz muziek gekozen, omdat het rustgevend is maar niet slaapverwekkend.  
+Wij verwachten dat de tijd van het afleggen langer zal zijn wanneer er muziek op de achtergrond aanwezig is.
+
+# Materialen
+Om de toetsen af te leggen, wordt er gebruik gemaakt van een Google Forms. In dit formulier maakt de kandidaat een korte toets van [15-20] vragen. Verder vragen wij aan de kandidaat of hij/zij met ons in de aangegeven Discord call wil zitten. Hiervoor wordt een aparte Discord server van tevoren aangemaakt. Voor het opzetten van een Discord server, volg de volgende stappen die te vinden zijn op de [officiële support site](https://support.discord.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
+
+# Methoden
+Alle kandidaten worden opgeroepen om ons in Discord bij te wonen. Hier wordt iedereen opgevangen in de "wachtkamer". Één voor één wordt iemand opgeroepen door naar een andere voice channel te worden gesleept om een toets te maken. De eerste toets van elke kandidaat zal zonder muziek worden afgelegd. Hierna wordt de kandidaat weer verzocht om in de "wachtkamer" te zitten. Na een bepaalde tijd zal hij/zij weer worden opgeroepen om de tweede toets af te leggen. Bij deze sessie zal er muziek worden afgespeeld.  
+Hierbij zal de meting zonder muziek als controle meting worden beschouwd.
+
+Er wordt verwacht dat het per kandidaat ongeveer 15 minuten duurt; 5 minuten per toets met een 5 minuten rust tussenin om de kandidaat uit het denkritme te krijgen.
+
+Voor de resultaten worden alleen de testen met een score hoger dan 60% meegenomen in de uitwerking.
+
+Om de eerste deelvraag "*Heeft muziek invloed op de resultaat van de test?*" te beantwoorden, zullen er categorieën worden gemaakt over de percentages: hoger dan 90% goed, 80%-89% goed, 70%-79% goed en 60%-69% goed. Deze categorieën worden voor beide metingen ingevuld om te zien of er een verschil is in de hoeveelheden.
+
+Voor de tweede deelvraag "*Is er een verband tussen tijd en resultaat?*" wordt er per test gekeken of er beter of slechter wordt gescored met de gebruikte tijd. 
+
+Voor de onderzoeksvraag wordt de tijd per test gemeten en gekeken naar het verschil in tijd tussen met of zonder muziek. 
+
+Niet iedereen zal de gekozen muziek even erg waarderen. Dit kan invloed hebben op de resultaten, maar omdat dit te erg varieert zal het in de discussie worden meegenomen en buiten beschouwing worden gelaten tijdens het formuleren van de resultaten.
+
+# Data interpretatie
+De deelvraag "*Heeft muziek invloed op de resultaat van de test?*" is makkelijk te visualiseren door cirkeldiagrammen van beide metingen te maken en te vullen met de hiervoor genoemde groepering.
+Voor de deelvraag "*Is er een verband tussen tijd en resultaat?*" wordt er gebruik gemaakt van spreidingsdiagrammen, waarbij de x-as staat voor de afgelegde tijd en de y-as voor de behaalde percentage.
+Bij de onderzoeksvraag worden er staafdiagrammen gevisualiseerd met de frequentie waarin een bepaalde tijd wordt afgelegd.

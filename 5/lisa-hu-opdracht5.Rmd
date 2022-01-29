@@ -1,0 +1,73 @@
+---
+title: "Weekopdraht5"
+author: "Lisa Hu"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Opdracht 1
+```{r}
+aardbevingen <- read.csv("all_induced.csv")
+sorted_aard <- aardbevingen[order(-aardbevingen$MAG),]
+head(sorted_aard, n=5)
+```
+De plaatsen met de zwaarte aardbevingen zijn Huizinge, Bergen, Westeremden, Roswinkel, Zeerijp.
+
+# Opdracht 2
+```{r}
+sub <- subset(aardbevingen, (aardbevingen$MAG > 1.5))
+
+test <- as.data.frame(table(sub$LOCATION))
+sorted_test <- test[order(-test$Freq),]
+head(sorted_test, n = 10)
+```
+Dit zijn de tien plaatsen met de meest opgewekte aardbevingen.
+
+# Opdracht 3
+
+```{r}
+loppersum <- aardbevingen[aardbevingen$LOCATION=="Loppersum",]
+sorted_loppersum <- loppersum[order(loppersum$YYMMDD),]
+sorted_loppersum
+```
+
+# Opdracht 4
+```{r}
+library(datasets)
+data(iris)
+iris
+```
+Om de soort iris te bepalen, kan je de gemiddelde waardes van elke eigenschap nemen.
+
+# Opdracht 5
+```{r eval=FALSE}
+install.packages("readxl")
+library("readxl")
+xls_data <- read_excel("<filename>.xls")
+```
+Er zijn meerdere packages beschikbaar, maar dit is een van de packages.
+
+# Opdracht 6
+Met gebruik van de package `pandas` kan je de xls-bestanden omzetten naar csv-bestanden:
+```{}
+import pandas as pd
+
+xlsfile = "<filename>.xls"
+csvfile = "<filename>.xls"
+readfile = pd.read_excel(xlsfile)
+readfile.to_csv(csvfile, index=None, header=True)
+```
+
+# Opdracht 7
+Met gebruik van de command line:
+```{}
+libreoffice --headless --convert-to csv <filename>.xls
+```
+
+# Opdracht 8
+```{}
+libreoffice --headless --convert-to csv *.xls
+```
+
+

@@ -1,0 +1,75 @@
+---
+title: "Opdracht_3.Rmd"
+author: "Lisa Hu"
+date: "12-5-2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Opdracht 2
+Om de working directory te veranderen kan de volgende command worden gebruikt door de path mee te geven als argument.
+```
+setwd()
+```
+
+# Opdracht 3
+```{r}
+read_table <- read.table(file="Week3_opdracht2.csv", sep=",")
+read_table
+```
+# Opdracht 4
+Factor data slaat nominale data op als vector en geeft het een telbare waarde mee. 
+
+# Opdracht 5
+```{r}
+read_csv <- read.csv("Week3_opdracht2.csv")
+read_csv
+```
+
+# Opdracht 6
+```{r}
+read_2csv <- read.csv("Week3_opdracht6(1).csv", na.strings=c(""))
+read_2csv
+```
+
+De data van deze file is incompleet:
+
+- Nummer 3 mist zijn naam;
+- Nummer 5 mist haar leeftijd;
+- Nummer 6 mist haar inkomen.
+
+# Opdracht 7
+```{r}
+read_2csv <- read.csv("Week3_opdracht6(1).csv", na.strings=c(""))
+par(mfrow=c(2,2))
+plot(x=read_2csv$leeftijd, y=read_2csv$Inkomen, type="b", col="blue1",
+     main="Lijn inkomen per leeftijd", xlab="leeftijd", ylab="inkomen")
+hist(read_2csv$Inkomen, col="red", 
+     main="Histogram inkomen", xlab="inkomen", ylab="frequency")
+boxplot(read_2csv$leeftijd, main="Boxplot leeftijd", ylab="leeftijd")
+plot(factor(read_2csv$woonplaats), las=2)
+```
+
+# Opdracht 8
+8 obs. zijn de rijen.
+5 variables zijn de kolommen.
+
+# Opdracht 9
+```{r}
+min(read_2csv$leeftijd, na.rm=TRUE)
+max(read_2csv$leeftijd, na.rm=TRUE)
+mean(read_2csv$leeftijd, na.rm=TRUE)
+min(read_2csv$Inkomen, na.rm=TRUE)
+max(read_2csv$Inkomen, na.rm=TRUE)
+mean(read_2csv$Inkomen, na.rm=TRUE)
+```
+
+# Opdracht 10
+```{r}
+summary(read_2csv)
+```

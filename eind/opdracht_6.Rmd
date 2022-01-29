@@ -1,0 +1,167 @@
+---
+title: "Opdracht_6"
+author: "Mats, Dennis-Haandrikman, Lisa Hu"
+date: "5/31/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Reading in the file 
+
+```{r}
+
+data001 <- read.csv("JamesBond(1).csv")
+
+data001$Date_Time <- as.POSIXct(data001$Date_Time, origin="1970-01-01")
+
+```
+
+### counting meals bij callories intake greater than 0 
+
+```{r}
+
+meals <- nrow(data001[data001$Calorie_Intake>0, ])
+meals
+```
+
+### filtering out every nan and sleeping from annotations 
+
+```{r}
+
+annotations_string <- paste(data001$Annotation, collapse = ";")
+annotations_vector <- strsplit(annotations_string, ";")[[1]]
+annotations_vector_filtered <- annotations_vector[!annotations_vector %in% grep(paste0(c("nan", "sleeping"), collapse = "|"), annotations_vector, value = T)]
+
+
+factored_data <- factor(annotations_vector_filtered)
+dingus <- as.data.frame(table(annotations_vector_filtered))
+colnames(dingus) <- c("names", "Freq")
+dingus
+```
+### Opdracht 5
+
+```{r}
+orderd_dingus <- dingus[order(-dingus$Freq),]
+orderd_dingus
+barplot(orderd_dingus$Freq, names.arg = orderd_dingus$names, las=2)
+plot(data001$Date_Time, data001$Body_Temperature)
+plot(data001$Date_Time, data001$Glucose_Levels, type = "l",)
+```
+### opdracht 6 
+
+
+```{r}
+library(ggpubr)
+
+
+glucos_sd <- sd(data001$Glucose_Levels)
+
+glucose_mean <- mean(data001$Glucose_Levels)
+
+dnorm_g <- dnorm(data001$Glucose_Levels, glucose_mean, glucos_sd)
+
+pnorm_g <- pnorm(data001$Glucose_Levels, glucose_mean, glucos_sd)
+
+ks.test(data001$Glucose_Levels, pnorm_g)
+
+plot(data001$Glucose_Levels, dnorm_g)
+
+plot(data001$Glucose_Levels, pnorm_g)
+
+ggdensity(data001$Glucose_Levels, xlab = "Glucoselevel in mmol-l")
+
+ggqqplot(data001$Glucose_Levels)
+
+hist(data001$Glucose_Levels)
+
+summary(data001$Glucose_Levels)
+
+hist(rnorm(data001$Glucose_Levels))
+```
+### opdracht 7
+
+```{r}
+
+meals <- data001[!data001$Calorie_Intake %in% c(0),]
+x_1 <- seq(1, nrow(meals), by=1)
+plot(x_1, meals$Calorie_Intake, xlab="Meals", ylab="Calorie intake")
+```
+### 8
+
+```{r}
+
+
+
+plot(meals$Calorie_Intake, meals$Glucose_Levels, xlab="Calorie intake", ylab="Glucose levels")
+abline(lm(meals$Glucose_Levels~meals$Calorie_Intake), col="blue")
+
+```
+
+### opdracht 9
+
+```{r}
+library(dplyr)
+activiteiten <- dingus$names
+
+filterd_datasubset <- data001 %>% filter(!grepl('nan|sleeping', Annotation))
+
+
+
+```
+```{r}
+
+for (variable_ in activiteiten)
+  {
+  y_sub <- filterd_datasubset[ which(filterd_datasubset$Annotation == variable_),]
+  plot(y_sub$Date_Time, y_sub$Glucose_Levels, main = variable_ , type = 'l')
+    
+  }
+
+```
+
+### opdracht 10 
+```{r}
+for (variable_ in activiteiten)
+  {
+  temp_sub <- filterd_datasubset[ which(filterd_datasubset$Annotation == variable_),]
+  temp_var_2 <- sum(temp_sub$Calorie_Intake)
+
+  print(c(variable_, temp_var_2))
+    
+  }
+
+```
+ 
+ 
+
+### opdracht 11 zelfde als met 9 
+
+```{r}
+
+for (variable_ in activiteiten)
+  {
+  temp_sub <- filterd_datasubset[ which(filterd_datasubset$Annotation == variable_),]
+  barplot(temp_sub$Glucose_Levels~temp_sub$Date_Time, main = variable_, las=2)
+    
+  }
+```
+
+### opdracht 12
+```{r}
+for (variable_ in activiteiten)
+  {
+  temp_sub <- filterd_datasubset[ which(filterd_datasubset$Annotation == variable_),]
+  temp_var_1 <- summarise(temp_sub, Average = mean(Glucose_Levels, na.rm = T))
+
+  print(c(variable_, temp_var_1))
+    
+  }
+
+```
+
+er is geen significant verschil in bloedsuiker te zien in de activiteiten. 
